@@ -97,11 +97,13 @@ pub struct Client {
 impl Asana {
     pub fn connect(token: String) -> Client {
         Client {
+            client: reqwest::Client::builder()
+                .user_agent(
+                    &format!("asana_sdk/{}", env!("CARGO_PKG_VERSION"))
+                )
+                .build().unwrap(),
             token,
             endpoint: String::from(""),
-            client: reqwest::Client::builder()
-                .user_agent("asana_sdk.rs/0.1.2")
-                .build().unwrap(),
         }
 
     }
